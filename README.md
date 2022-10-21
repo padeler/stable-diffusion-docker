@@ -13,9 +13,10 @@ container.
 
 ## Before you start
 
-The pipeline uses the full model and weights which requires 8GB+ of GPU RAM.
-On smaller GPUs you may need to modify some of the parameters. It should take a
-few seconds to create one image.
+The pipeline uses the full model and weights which requires 8GB+ of GPU RAM. It
+should take a few seconds to create one image. On smaller GPUs you may need to
+modify some of the parameters, see the [Examples](#examples) section for more
+details.
 
 Since it uses the official model, you will need to create a [user access token](https://huggingface.co/docs/hub/security-tokens)
 in your [Huggingface account](https://huggingface.co/settings/tokens). Save the
@@ -54,8 +55,8 @@ are implemented for compatibility:
 * `--prompt [PROMPT]`: the prompt to render into an image
 * `--n_samples [N_SAMPLES]`: number of images to create per run (default 1)
 * `--n_iter [N_ITER]`: number of times to run pipeline (default 1)
-* `--H [H]`: image height in pixels (default 512)
-* `--W [W]`: image width in pixels (default 512)
+* `--H [H]`: image height in pixels (default 512, must be divisible by 64)
+* `--W [W]`: image width in pixels (default 512, must be divisible by 64)
 * `--scale [SCALE]`: unconditional guidance scale (default 7.5)
 * `--seed [SEED]`: RNG seed for repeatability (default is a random seed)
 * `--ddim_steps [DDIM_STEPS]`: number of sampling steps (default 50)
@@ -63,10 +64,11 @@ are implemented for compatibility:
 Other options:
 
 * `--attention-slicing`: use less memory at the expense of inference speed
+(default is no attention slicing)
 * `--half`: use float16 tensors instead of float32 (default float32)
-* `--skip`: skip safety checker
+* `--skip`: skip safety checker (default is the safety checker is on)
 * `--token [TOKEN]`: specify a Huggingface user access token at the command line
-instead of reading it from a file
+instead of reading it from a file (default is a file)
 
 ### Examples
 
@@ -87,6 +89,19 @@ Options can be combined:
 
 ```sh
 ./build.sh run --scale 7.0 --seed 42 'abstract art'
+```
+
+On systems with <8GB of GPU RAM, you can try mixing and matching options:
+
+* Make images smaller than 512x512 using `--W` and `--H` to decrease memory use
+and increase image creation speed
+* Use `--half` to decrease memory use but slightly decrease image quality
+* Use `--attention-slicing` to decrease memory use but also decrease image
+creation speed
+* Skip the safety checker with `--skip` to run less code
+
+```sh
+./build.sh run --W 256 --H 256 --half --attention-slicing --skip --prompt 'abstract art'
 ```
 
 On Windows, if you aren't using WSL2 and instead use MSYS, MinGW, or Git Bash,

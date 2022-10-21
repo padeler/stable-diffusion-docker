@@ -1,2 +1,6 @@
 /output
 token.txt
+huggingface/
+img
+output_weights
+training_images
