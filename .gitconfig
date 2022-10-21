@@ -1,0 +1,5 @@
+[user]
+	email = padeler@gmail.com
+	name = padeler
+[credential]
+	helper = "!f() { /home/huggingface/.vscode-server/bin/129500ee4c8ab7263461ffe327268ba56b9f210d/node /tmp/vscode-remote-containers-d150f4074e5a05ea062536685a720d8815ad811b.js $*; }; f"

@@ -1,0 +1,32 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.217.4/containers/docker-from-docker
+{
+	"name": "DevEnv",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"context": ".."
+	},
+	"remoteUser": "huggingface",
+	"workspaceMount": "source=${localWorkspaceFolder},target=/home/huggingface,type=bind,consistency=cached",
+	"workspaceFolder": "/home/huggingface",
+	// "postCreateCommand": "bash /app/install_deps.sh",
+	"mounts": [
+		"type=volume,source=huggingface,target=/home/huggingface/.cache/huggingface"
+	],
+	"containerEnv": {
+		"PYTHONPATH": "/home/huggingface"
+	},
+	"extensions": [
+		"ms-python.python",
+		"ms-python.vscode-pylance",
+		"njpwerner.autodocstring",
+		"stkb.rewrap",
+		"shd101wyy.markdown-preview-enhanced",
+		"adpyke.codesnap"
+	],
+	"runArgs": [
+		"--shm-size=8G",
+		"--gpus=all"
+
+	]
+}

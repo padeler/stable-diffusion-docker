@@ -17,7 +17,7 @@ dev() {
     docker run --rm --gpus=all --entrypoint=sh \
         -v huggingface:/home/huggingface/.cache/huggingface \
         -v "$PWD"/output:/home/huggingface/output \
-        -it "$CWD"
+        -it "$CWD" 
 }
 
 run() {
